@@ -53,7 +53,7 @@ def atm_menu(atm_last4):
 
     balance = get_balance(atm_last4)
 
-    tk.Label(root, text=f"Welcome! Your balance is: ${balance}", font=("Arial", 12)).pack(pady=10)
+    tk.Label(root, text=f"Welcome! Your balance is: ₹{balance}", font=("Arial", 12)).pack(pady=10)
 
     def withdraw():
         amount = int(amount_entry.get())
@@ -65,11 +65,11 @@ def atm_menu(atm_last4):
             return
         new_balance = balance - amount
         update_balance(atm_last4, new_balance)
-        messagebox.showinfo("Success", f"Withdrawn ${amount}. New balance: ${new_balance}")
+        messagebox.showinfo("Success", f"Withdrawn ₹{amount}. New balance: ₹{new_balance}")
         root.destroy()
 
     def show_balance():
-        messagebox.showinfo("Balance", f"Your current balance is: ${balance}")
+        messagebox.showinfo("Balance", f"Your current balance is: ₹{balance}")
 
     def exit_atm():
         root.destroy()

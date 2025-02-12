@@ -42,18 +42,23 @@ def capture_faces():
 
 root = tk.Tk()
 root.title("Register Face")
-root.geometry("400x200")
+root.state('zoomed')  # Maximize the window
 
-label = tk.Label(root, text="Enter Last 4 Digits of ATM Number:", font=("Arial", 12))
-label.pack(pady=10)
+root.configure(bg="#f0f0f0")
 
-atm_entry = tk.Entry(root, font=("Arial", 12))
-atm_entry.pack(pady=5)
+tk.Label(root, text="Real Time Face Detection and Security System for ATM Machine", font=("Arial", 16), bg="#f0f0f0").pack(pady=10)
+tk.Label(root, text="Developed by: Siddhika Pokharkar, Bhagyashri Bhalerao, Pratiksha Dolas", font=("Arial", 12), bg="#f0f0f0").pack(pady=10)
 
-capture_btn = tk.Button(root, text="Register Face", command=capture_faces, font=("Arial", 12))
+label = tk.Label(root, text="Enter Last 4 Digits of ATM Number:", font=("Arial", 14), bg="#f0f0f0")
+label.pack(pady=20)
+
+atm_entry = tk.Entry(root, font=("Arial", 14))
+atm_entry.pack(pady=10)
+
+capture_btn = tk.Button(root, text="Register Face", command=capture_faces, font=("Arial", 14), bg="#4CAF50", fg="white")
 capture_btn.pack(pady=20)
 
-message_label = tk.Label(root, text="", font=("Arial", 12))
+message_label = tk.Label(root, text="", font=("Arial", 14), bg="#f0f0f0")
 message_label.pack(pady=10)
 
 root.mainloop()

@@ -12,7 +12,7 @@ def create_database():
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 atm_last4 TEXT UNIQUE,
-                balance INTEGER DEFAULT 1000
+                balance INTEGER DEFAULT 5000
             )
         """)
         conn.commit()
