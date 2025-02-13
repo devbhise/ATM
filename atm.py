@@ -4,6 +4,7 @@ from database import get_balance, update_balance
 import cv2
 import os
 import face_recognition
+from connection import send_withdraw_signal , check_connection
 
 def authenticate(atm_last4):
     face_folder = f"faces/{atm_last4}/"
@@ -47,6 +48,8 @@ def authenticate(atm_last4):
     return False
 
 def atm_menu(atm_last4):
+    if not check_connection():
+        return
     root = tk.Tk()
     root.title("ATM Menu")
     root.geometry("400x300")
@@ -54,19 +57,22 @@ def atm_menu(atm_last4):
     balance = get_balance(atm_last4)
 
     tk.Label(root, text=f"Welcome! Your balance is: ₹{balance}", font=("Arial", 12)).pack(pady=10)
-
     def withdraw():
-        amount = int(amount_entry.get())
-        if amount % 100 != 0:
-            messagebox.showerror("Error", "Please enter an amount that is a multiple of 100.")
-            return
-        if amount > balance:
-            messagebox.showerror("Error", "Insufficient balance.")
-            return
-        new_balance = balance - amount
-        update_balance(atm_last4, new_balance)
-        messagebox.showinfo("Success", f"Withdrawn ₹{amount}. New balance: ₹{new_balance}")
-        root.destroy()
+            amount = int(amount_entry.get())
+            if amount % 100 != 0:
+                messagebox.showerror("Error", "Please enter an amount that is a multiple of 100.")
+                return
+            if amount > balance:
+                messagebox.showerror("Error", "Insufficient balance.")
+                return
+
+            if send_withdraw_signal(amount):
+                new_balance = balance - amount
+                update_balance(atm_last4, new_balance)
+                messagebox.showinfo("Success", f"Withdrawn ₹{amount}. New balance: ₹{new_balance}")
+                root.destroy()
+            else:
+                messagebox.showerror("Error", "Failed to communicate with the ATM hardware.")
 
     def show_balance():
         messagebox.showinfo("Balance", f"Your current balance is: ₹{balance}")
